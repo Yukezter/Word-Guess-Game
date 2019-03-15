@@ -204,7 +204,6 @@ const ANIMALS_OG = [
   "zebra"
 ];
 
-// const ANIMALS_OG = ["bat", "pig", "rat", "dog", "cat"];
 // HTML elements--------------------------------------------
 
 var animalEl = document.getElementById("animal");
@@ -240,7 +239,6 @@ var updateHtmlInfo = () => {
   guessesLeftEl.innerHTML = guessesLeft;
   winToLossRatioEl.innerHTML = winToLossRatio;
 };
-
 var defineVars = () => {
   // Game variables
   // Copy array on animals from original array
@@ -262,7 +260,6 @@ var defineVars = () => {
   // 
   flag = true;
 };
-
 function nextWord() {
   flag = true;
   underscores = "_".repeat(animal.length);

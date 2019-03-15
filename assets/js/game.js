@@ -217,7 +217,7 @@ var nextAnimal = () => {
   animal = animals[randomIndex];
 };
 var updateHtmlInfo = () => {
-  lettersTriedEl.innerHTML = lettersTried;
+  lettersTriedEl.innerHTML = addSpaces(lettersTried);
   winsEl.innerHTML = wins;
   lossesEl.innerHTML = losses;
   guessesLeftEl.innerHTML = guessesLeft;
@@ -299,21 +299,23 @@ var startGame = function() {
           }
         }
       } else {
-        guessesLeft--;
-      }
-      if (guessesLeft === 0) {
-        losses++;
-        winToLossRatio = wins / (wins + losses);
-        flag = false;
-        nextWordEd.style.visibility = "visible";
-        animalEl.innerHTML = animal;
-        removeAnimal(animal);
-        if (animals.length > 0) {
-          nextAnimal();
-          guessesLeft = 10;
-        } else {
-          document.onkeyup = null;
-          startGameEl.innerHTML = "Start game!";
+        if (!lettersTried.includes(userInput)) {
+          guessesLeft--;
+        }
+        if (guessesLeft === 0) {
+          losses++;
+          winToLossRatio = wins / (wins + losses);
+          flag = false;
+          nextWordEd.style.visibility = "visible";
+          animalEl.innerHTML = animal;
+          removeAnimal(animal);
+          if (animals.length > 0) {
+            nextAnimal();
+            guessesLeft = 10;
+          } else {
+            document.onkeyup = null;
+            startGameEl.innerHTML = "Start game!";
+          }
         }
       }
       if (!lettersTried.includes(userInput)) {

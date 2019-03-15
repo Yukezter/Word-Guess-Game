@@ -3,7 +3,6 @@ const ANIMALS_OG = [
   "aardvark",
   "albatross",
   "alligator",
-  "alpaca",
   "ant",
   "anteater",
   "antelope",
@@ -21,7 +20,6 @@ const ANIMALS_OG = [
   "buffalo",
   "butterfly",
   "camel",
-  "caribou",
   "cat",
   "caterpillar",
   "cattle",
@@ -33,10 +31,8 @@ const ANIMALS_OG = [
   "cobra",
   "cockroach",
   "cod",
-  "cormorant",
   "coyote",
   "crab",
-  "crane",
   "crocodile",
   "crow",
   "deer",
@@ -60,7 +56,6 @@ const ANIMALS_OG = [
   "emu",
   "falcon",
   "ferret",
-  "finch",
   "fish",
   "flamingo",
   "fly",
@@ -70,27 +65,19 @@ const ANIMALS_OG = [
   "gazelle",
   "gerbil",
   "giraffe",
-  "gnat",
-  "gnu",
   "goat",
   "goose",
-  "goldfinch",
   "goldfish",
   "gorilla",
   "grasshopper",
-  "grouse",
-  "guanaco",
-  "gull",
   "hamster",
   "hare",
   "hawk",
   "hedgehog",
   "heron",
-  "herring",
   "hippopotamus",
   "hornet",
   "horse",
-  "human",
   "hummingbird",
   "hyena",
   "jackal",
@@ -99,19 +86,12 @@ const ANIMALS_OG = [
   "jellyfish",
   "kangaroo",
   "koala",
-  "lapwing",
   "lark",
   "lemur",
   "leopard",
   "lion",
   "llama",
   "lobster",
-  "locust",
-  "loris",
-  "louse",
-  "lyrebird",
-  "magpie",
-  "mallard",
   "manatee",
   "mandrill",
   "mantis",
@@ -125,11 +105,8 @@ const ANIMALS_OG = [
   "mouse",
   "mosquito",
   "mule",
-  "narwhal",
-  "newt",
   "octopus",
   "opossum",
-  "oryx",
   "ostrich",
   "otter",
   "owl",
@@ -137,24 +114,20 @@ const ANIMALS_OG = [
   "oyster",
   "panther",
   "parrot",
-  "peafowl",
   "pelican",
   "penguin",
   "pig",
   "pigeon",
   "pony",
   "porcupine",
-  "porpoise",
   "quail",
   "rabbit",
   "raccoon",
-  "rail",
   "ram",
   "rat",
   "raven",
   "reindeer",
   "rhinoceros",
-  "rook",
   "salamander",
   "salmon",
   "sandpiper",
@@ -165,13 +138,10 @@ const ANIMALS_OG = [
   "seal",
   "shark",
   "sheep",
-  "shrew",
   "skunk",
   "snail",
   "snake",
-  "sparrow",
   "spider",
-  "spoonbill",
   "squid",
   "squirrel",
   "starling",
@@ -179,7 +149,6 @@ const ANIMALS_OG = [
   "stinkbug",
   "swallow",
   "swan",
-  "tarsier",
   "termite",
   "tiger",
   "toad",
@@ -196,17 +165,15 @@ const ANIMALS_OG = [
   "wolf",
   "wolverine",
   "wombat",
-  "woodcock",
   "woodpecker",
   "worm",
-  "wren",
-  "yak",
   "zebra"
 ];
 
 // HTML elements--------------------------------------------
 
 var animalEl = document.getElementById("animal");
+var lettersTriedEl = document.getElementById("letters-tried");
 var winsEl = document.getElementById("wins");
 var lossesEl = document.getElementById("losses");
 var guessesLeftEl = document.getElementById("guesses-left");
@@ -215,6 +182,20 @@ var startGameEl = document.getElementById("start-game");
 var nextWordEd = document.getElementById("next-word");
 // Hide 'next-word' button
 nextWordEd.style.visibility = "hidden";
+
+// Game variables--------------------------------------------
+// Declare all variable before defined;
+// They are define when user starts game
+var animals;
+var lettersTriedEl;
+var wins;
+var losses;
+var guessesLeft;
+var winToLossRatio;
+var randomIndex;
+var animal;
+var underscores;
+var flag;
 
 // Functions-------------------------------------------------
 
@@ -227,13 +208,16 @@ var replaceAt = (animal, index, replace) => {
 };
 var removeAnimal = currentAnimal => {
   var index = animals.indexOf(currentAnimal);
-  if (index > -1) animals.splice(index, 1);
+  if (index > -1) {
+    animals.splice(index, 1)
+  };
 };
 var nextAnimal = () => {
   randomIndex = Math.floor(Math.random() * animals.length);
   animal = animals[randomIndex];
 };
 var updateHtmlInfo = () => {
+  lettersTriedEl.innerHTML = lettersTried;
   winsEl.innerHTML = wins;
   lossesEl.innerHTML = losses;
   guessesLeftEl.innerHTML = guessesLeft;
@@ -243,6 +227,8 @@ var defineVars = () => {
   // Game variables
   // Copy array on animals from original array
   animals = ANIMALS_OG.slice();
+  // Letters tried for word
+  lettersTried = "";
   // Wins variable (starts at 0)
   wins = 0;
   // Losses variable (starts at 0)
@@ -257,7 +243,8 @@ var defineVars = () => {
   animal = animals[randomIndex];
   // Make a sequence of underscores the length of chosen animal
   underscores = "_".repeat(animal.length);
-  // 
+  // The flag is a boolean that stops script until user
+  // clicks on the 'next word' button
   flag = true;
 };
 function nextWord() {
@@ -265,6 +252,8 @@ function nextWord() {
   underscores = "_".repeat(animal.length);
   animalEl.innerHTML = addSpaces(underscores);
   nextWordEd.style.visibility = "hidden";
+  lettersTried = "";
+  lettersTriedEl.innerHTML = lettersTried;
 }
 
 // Game script--------------------------------------
@@ -282,12 +271,11 @@ var startGame = function() {
     // Uppercase letters: 65-90 Lowercase letters: 97-122
     var upperLetterPressed = e.which <= 90 && e.which >= 65;
     var lowerLetterPressed = e.which <= 122 && e.which >= 97;
-    inputIsLetter = upperLetterPressed || lowerLetterPressed
+    inputIsLetter = upperLetterPressed || lowerLetterPressed;
 
     if (inputIsLetter && flag) {
       // Store letter pressed by user in a variable
       var userInput = e.key;
-      guessesLeft--;
       if (animal.includes(userInput)) {
         for (i = 0; i < animal.length; i++) {
           if (animal[i] === userInput) {
@@ -310,6 +298,8 @@ var startGame = function() {
             startGameEl.innerHTML = "Start game!";
           }
         }
+      } else {
+        guessesLeft--;
       }
       if (guessesLeft === 0) {
         losses++;
@@ -325,6 +315,9 @@ var startGame = function() {
           document.onkeyup = null;
           startGameEl.innerHTML = "Start game!";
         }
+      }
+      if (!lettersTried.includes(userInput)) {
+        lettersTried += userInput;
       }
       updateHtmlInfo();
     }

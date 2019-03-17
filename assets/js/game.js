@@ -1,4 +1,6 @@
 // Animal-themed word guessing game!!!
+
+// Here's the array of animals
 const ANIMALS_OG = [
   "aardvark",
   "albatross",
@@ -45,8 +47,6 @@ const ANIMALS_OG = [
   "dove",
   "dragonfly",
   "duck",
-  "dugong",
-  "dunlin",
   "eagle",
   "echidna",
   "eel",
@@ -74,7 +74,6 @@ const ANIMALS_OG = [
   "hare",
   "hawk",
   "hedgehog",
-  "heron",
   "hippopotamus",
   "hornet",
   "horse",
@@ -86,7 +85,6 @@ const ANIMALS_OG = [
   "jellyfish",
   "kangaroo",
   "koala",
-  "lark",
   "lemur",
   "leopard",
   "lion",
@@ -146,7 +144,6 @@ const ANIMALS_OG = [
   "squirrel",
   "starling",
   "stingray",
-  "stinkbug",
   "swallow",
   "swan",
   "termite",
@@ -184,8 +181,9 @@ var nextWordEd = document.getElementById("next-word");
 nextWordEd.style.visibility = "hidden";
 
 // Game variables--------------------------------------------
+
 // Declare all variable before defined;
-// They are define when user starts game
+// They are defined when user starts game
 var animals;
 var lettersTriedEl;
 var wins;
@@ -203,19 +201,25 @@ var flag;
 var addSpaces = word => {
   return word.split("").join(" ");
 };
+// Returns new string with a replaced letter
+// This is used to replace an underscore with
+// the letter the user guessed correctly
 var replaceAt = (animal, index, replace) => {
   return animal.substring(0, index) + replace + animal.substring(index + 1);
 };
+// Remove current animal from array
 var removeAnimal = currentAnimal => {
   var index = animals.indexOf(currentAnimal);
   if (index > -1) {
     animals.splice(index, 1)
   };
 };
+// Pick the next random animal
 var nextAnimal = () => {
   randomIndex = Math.floor(Math.random() * animals.length);
   animal = animals[randomIndex];
 };
+// Display letters guessed and stats in html
 var updateHtmlInfo = () => {
   lettersTriedEl.innerHTML = addSpaces(lettersTried);
   winsEl.innerHTML = wins;
@@ -223,6 +227,8 @@ var updateHtmlInfo = () => {
   guessesLeftEl.innerHTML = guessesLeft;
   winToLossRatioEl.innerHTML = winToLossRatio;
 };
+
+// This function initializes all variables
 var defineVars = () => {
   // Game variables
   // Copy array on animals from original array
@@ -247,6 +253,10 @@ var defineVars = () => {
   // clicks on the 'next word' button
   flag = true;
 };
+
+// This resets flag boolean, displays underscores for
+// the next word, hides the 'next word' button, 
+// and  resets the letters tried to empty string
 function nextWord() {
   flag = true;
   underscores = "_".repeat(animal.length);
@@ -257,6 +267,7 @@ function nextWord() {
 }
 
 // Game script--------------------------------------
+
 var startGame = function() {
   defineVars();
   animalEl.innerHTML = addSpaces(underscores);
@@ -326,4 +337,5 @@ var startGame = function() {
   };
 };
 
+// Start the game upon clicking button
 startGameEl.addEventListener("click", startGame);

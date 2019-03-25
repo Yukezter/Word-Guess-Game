@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Word Guess Game</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body style="background: url(assets/images/animals-collage.jpg) no-repeat center center fixed; background-size: cover;">
+
+    <div class="container mx-auto" style="margin-top: 150px;">
+        <div class="jumbotron" style="background: white">
+            <h1 class="display-4 text-center mb-5" id="animal"></h1>
+            <p class="lead text-center">Letters tried: <span id="letters-tried"></span></p>
+            <p class="lead text-center">Wins: <span id="wins"></span></p>
+            <p class="lead text-center">Losses: <span id="losses"></span></p>
+            <p class="lead text-center">Guesses left: <span id="guesses-left"></span></p>
+            <p class="lead text-center">W/L ratio: <span id="ratio"></span></p>
+            <p class="lead text-center">
+                <a class="btn btn-primary btn-lg" id="start-game" href="#" role="button">Start game!</a>
+            </p>
+            <p class="lead text-center">
+                <a class="btn btn-primary btn-lg" id="next-word" onclick="nextWord();" href="#" role="button">Next word</a>
+            </p>
+        </div>
+    </div>
+    
+    <script src="assets/js/game.js" type="text/javascript"></script>
+</body>
+</html>
